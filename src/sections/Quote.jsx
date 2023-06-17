@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import styled, { keyframes } from "styled-components";
+import gsap from "gsap";
+import  ScrollTrigger  from "gsap/ScrollTrigger";
+
 
 const Section = styled.section`
   display: flex;
@@ -9,6 +12,7 @@ const Section = styled.section`
 
   width: 100vw;
   height: 100vh;
+
 `;
 
 const TextContainer = styled.div`
@@ -52,6 +56,20 @@ const Text = styled.p`
   }
 `;
 const Quote = () => {
+  gsap.registerPlugin(ScrollTrigger);
+  useLayoutEffect(() => {
+    gsap.from(".author", {
+      scrollTrigger: {
+        trigger: ".author",
+        start: "top 80%",
+        end: "top 50%",
+        scrub: true,
+      },
+      opacity: 0,
+      duration: 1,
+    });
+  }, []);
+  
   return (
     <Section>
       <TextContainer>
