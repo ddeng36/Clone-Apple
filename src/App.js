@@ -4,10 +4,8 @@ import "./app.css";
 function App() {
   return (
     <div className="App">
-      {/* <GlobalStyle /> */}
-      {/* <Quote/> */}
-      <div className="box"><h2>
-        Lit</h2></div>
+      <GlobalStyle />
+      <Quote/>
     </div>
   );
 }
