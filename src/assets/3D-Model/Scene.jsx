@@ -24,7 +24,7 @@ export function Model(props) {
         start: "top top",
         end: "bottom+=500 bottom",
         // markers: true,
-        toggleActions: "play none none reverse",
+        scrub: true,
       },
     });
     
