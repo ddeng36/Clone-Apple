@@ -67,7 +67,6 @@ const Quote = () => {
       start: "top top",
       pin: true,
       pinSpacing: false,
-      markers: true,
     });
     return () => {
       if (trigger) {
