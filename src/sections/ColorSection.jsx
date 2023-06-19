@@ -1,7 +1,10 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef, Suspense } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
-
+import { useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Environment } from "@react-three/drei";
+import  Model  from "../components/Scene2";
 const Section = styled.section`
   width: 100vw;
   height: 100vh;
@@ -45,13 +48,15 @@ const ColorSection = () => {
   const leftRef = useRef(null);
   const textRef = useRef(null);
 
+  const { nodes, materials } = useGLTF("/scene.gltf");
+
   useLayoutEffect(() => {
     let elements = sectionRef.current;
     let rightElem = rightRef.current;
     let leftElem = leftRef.current;
     let textElem = textRef.current;
-
     let updateColor = (color, text, rgbColor) => {
+      materials.Body.color.set(color);
       textElem.innerText = text;
       textElem.style.color = color;
       leftElem.style.backgroundColor = `rgba(${rgbColor},0.8)`;
@@ -73,7 +78,7 @@ const ColorSection = () => {
         scrollTrigger: {
           trigger: elements,
           start: "top top",
-          end: `+=${elements.offsetWidth +1000}`,
+          end: `+=${elements.offsetWidth + 1000}`,
           scrub: true,
         },
       })
@@ -121,8 +126,17 @@ const ColorSection = () => {
   return (
     <Section ref={sectionRef}>
       <Left ref={leftRef} />
-      <Center ref={textRef}>Sierra Blue</Center>
-      <Right ref={rightRef} />
+      <Center ref={textRef} />
+      <Right ref={rightRef} >
+      <Canvas camera={{ fov: 6.5 }}>
+        <ambientLight intensity={3} />
+        <directionalLight intensity={1} />
+        <Suspense fallback={null}>
+          <Model />
+        </Suspense>
+        <Environment preset="sunset" />
+      </Canvas>
+      </Right>
     </Section>
   );
 };
