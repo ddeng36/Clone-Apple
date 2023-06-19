@@ -7,6 +7,7 @@ import DisplaySection from "./sections/DisplaySection";
 import Processor from "./sections/ProcessorSection";
 import BatterySection from "./sections/BatterySection";
 import ColorSection from "./sections/ColorSection";
+import CameraSection from "./sections/CameraSection";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
       <Processor/>
       <BatterySection />
       <ColorSection/>
+      <CameraSection />
     </>
   );
 }
