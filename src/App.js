@@ -6,18 +6,19 @@ import DesignSection from "./sections/DesignSection";
 import DisplaySection from "./sections/DisplaySection";
 import Processor from "./sections/ProcessorSection";
 import BatterySection from "./sections/BatterySection";
+import ColorSection from "./sections/ColorSection";
 function App() {
   return (
     <>
       <GlobalStyle />
       <Quote/>
       <HeroSection />
-      <PhoneModel/>
+      {/* <PhoneModel/> */}
       <DesignSection/>
       <DisplaySection/>
       <Processor/>
       <BatterySection />
-      
+      <ColorSection/>
     </>
   );
 }
