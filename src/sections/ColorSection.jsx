@@ -53,6 +53,7 @@ const ColorSection = () => {
 
     let updateColor = (color, text, rgbColor) => {
       textElem.innerText = text;
+      textElem.style.color = color;
       leftElem.style.backgroundColor = `rgba(${rgbColor},0.8)`;
       rightElem.style.backgroundColor = `rgba(${rgbColor},0.4)`;
     };
