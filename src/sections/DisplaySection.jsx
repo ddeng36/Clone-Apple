@@ -12,14 +12,22 @@ const Section = styled.section`
   background-color: var(--dark);
   color: var(--white);
 
-  &>*:nth-child(even){
+  & > *:nth-child(even) {
     align-self: flex-end;
     margin-right: 4rem;
-  }
-  &>*:nth-child(odd){
-    align-self: flex-start;
-    margin-left: 4rem;
+    text-align: right;
+
+    @media screen and (max-width: 48em) {
+      margin-right: 1rem;
     }
+  }
+  & > *:nth-child(odd) {
+    margin-left: 4rem;
+
+    @media screen and (max-width: 48em) {
+      margin-left: 1rem;
+    }
+  }
 
 `;
 const MainTitle = styled.h1`
@@ -29,6 +37,18 @@ const MainTitle = styled.h1`
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  @media screen and (max-width: 70em) {
+    font-size: var(--fontxxxl);
+  }
+  @media screen and (max-width: 64em) {
+    font-size: var(--fontxxl);
+  }
+  @media screen and (max-width: 48em) {
+    font-size: var(--fontxl);
+  }
+  @media screen and (max-width: 40em) {
+    font-size: var(--fontlg);
+  }
 `;
 
 const TextBlockRight = styled.div`
@@ -41,6 +61,9 @@ const TextBlockRight = styled.div`
 const Title = styled.div`
   font-size: var(--fontlg);
   margin-bottom: 1rem;
+  @media screen and (max-width: 64em) {
+    font-size: var(--fontmd);
+  }
 `;
 
 const Text = styled.div`
@@ -48,6 +71,13 @@ const Text = styled.div`
   color: var(--greyLight);
   margin-bottom: 0.5rem;
   width: 55%;
+  @media screen and (max-width: 64em) {
+    width: 70%;
+  }
+  @media screen and (max-width: 48em) {
+    width: 100%;
+    font-size: var(--fontxxs);
+  }
 `;
 const TextBlockLeft = styled.div`
   display: flex;
@@ -76,6 +106,21 @@ const MovingText = styled.h1`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  @media screen and (max-width: 70em) {
+    font-size: var(--fontxxxl);
+  }
+  @media screen and (max-width: 64em) {
+    font-size: var(--fontxxl);
+  }
+  @media screen and (max-width: 48em) {
+    font-size: var(--fontxl);
+  }
+  @media screen and (max-width: 40em) {
+    font-size: var(--fontlg);
+  }
+  @media screen and (max-width: 30em) {
+    font-size: var(--fontmd);
+  }
 `
 
 const DisplaySection = () => {

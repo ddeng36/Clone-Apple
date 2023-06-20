@@ -44,6 +44,9 @@ const Colors = styled.ul`
   left: 35%;
   top: 50%;
   transform: translate(-50%, -50%);
+  @media screen and (max-width: 64em) {
+    left: 10%;
+  }
 `;
 
 const Color = styled.li`

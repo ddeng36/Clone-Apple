@@ -74,7 +74,7 @@ const Processor = styled.div`
   }
 
   @media screen and (max-width: 48em) {
-    display: none;
+    width: 30%;
   }
 `;
 

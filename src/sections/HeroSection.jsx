@@ -18,6 +18,15 @@ const Title = styled.h1`
   font-size: var(--fontlg);
   font-family: var(--fontL);
   color: var(--greyLight);
+  @media screen and (max-width: 48em) {
+    font-size: var(--fontmd);
+    left: 1rem;
+  }
+
+  @media screen and (max-width: 30em) {
+    width: 70%;
+    color: var(--white);
+  }
 `;
 
 const TextContainer = styled.div`
@@ -35,7 +44,29 @@ const TextContainer = styled.div`
     font-size: var(--fontxxxl);
     text-transform: uppercase;
     font-weight: 600;
-    padding: 3rem;
+    padding: 2rem;
+
+    @media screen and (max-width: 64em) {
+      font-size: var(--fontxxl);
+      padding: 0;
+    }
+    @media screen and (max-width: 48em) {
+      font-size: var(--fontxl);
+    }
+  }
+
+  @media screen and (max-width: 48em) {
+    flex-direction: column;
+    background-image: linear-gradient(90deg, var(--gradient));
+    align-items: flex-start;
+    filter: brightness(1.1);
+
+    & > *:last-child {
+      align-self: flex-end;
+    }
+
+    height: 80vh;
+    padding: 0 1rem;
   }
 `;
 

@@ -1,9 +1,7 @@
 import React, { useLayoutEffect, useRef,useEffect, Suspense,useContext } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
-import { useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
 import  Model2  from "../components/Scene2";
 import { ColorContext } from "../context/ColorContext";
 const Section = styled.section`
@@ -13,6 +11,9 @@ const Section = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 48em) {
+    display: none;
+  }
 `;
 const Left = styled.div`
   width: 50%;
@@ -21,6 +22,9 @@ const Left = styled.div`
   display: flex;
   background-color: rgba(155, 181, 206, 0.8);
   position: relative;
+  @media screen and (max-width: 48em) {
+    width: 100%;
+  }
 `;
 
 const Right = styled.div`
