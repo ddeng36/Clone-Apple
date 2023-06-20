@@ -1,10 +1,11 @@
-import React, { useLayoutEffect, useRef, Suspense } from "react";
+import React, { useLayoutEffect, useRef,useEffect, Suspense,useContext } from "react";
 import styled from "styled-components";
 import gsap from "gsap";
 import { useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import  Model  from "../components/Scene2";
+import  Model2  from "../components/Scene2";
+import { ColorContext } from "../context/ColorContext";
 const Section = styled.section`
   width: 100vw;
   height: 100vh;
@@ -41,67 +42,86 @@ const Center = styled.div`
   text-transform: uppercase;
   filter: brightness(0.85);
 `;
-
 const ColorSection = () => {
   const sectionRef = useRef(null);
   const rightRef = useRef(null);
   const leftRef = useRef(null);
   const textRef = useRef(null);
 
-  const { nodes, materials } = useGLTF("/scene.gltf");
+  const { currentColor, changeColorContext } = useContext(ColorContext);
 
-  useLayoutEffect(() => {
-    let elements = sectionRef.current;
+  useEffect(() => {
     let rightElem = rightRef.current;
     let leftElem = leftRef.current;
     let textElem = textRef.current;
+
+    textElem.innerText = currentColor.text;
+    textElem.style.color = currentColor.color;
+
+    rightElem.style.backgroundColor = `rgba(${currentColor.rgbColor}, 0.4)`;
+    leftElem.style.backgroundColor = `rgba(${currentColor.rgbColor}, 0.8)`;
+  }, [currentColor]);
+
+  useLayoutEffect(() => {
+    let Elem = sectionRef.current;
+
     let updateColor = (color, text, rgbColor) => {
-      materials.Body.color.set(color);
-      textElem.innerText = text;
-      textElem.style.color = color;
-      leftElem.style.backgroundColor = `rgba(${rgbColor},0.8)`;
-      rightElem.style.backgroundColor = `rgba(${rgbColor},0.4)`;
+      const colorObj = {
+        color,
+        text,
+        rgbColor,
+      };
+      changeColorContext(colorObj);
     };
 
-    gsap.to(elements, {
+    // pin the section
+    gsap.to(Elem, {
       scrollTrigger: {
-        trigger: elements,
+        trigger: Elem,
         start: "top top",
-        end: `+=${elements.offsetWidth + 1000}`,
-        scrub: true,
+        end: `+=${Elem.offsetWidth + 1000}`,
+        scrub: 1,
         pin: true,
+        pinSpacing: true,
       },
     });
 
     let t2 = gsap
       .timeline({
         scrollTrigger: {
-          trigger: elements,
+          trigger: Elem,
           start: "top top",
-          end: `+=${elements.offsetWidth + 1000}`,
-          scrub: true,
+          end: `+=${Elem.offsetWidth + 1000}`,
+          scrub: 1,
         },
       })
-      .to(elements, {
+      .to(Elem, {
         onStart: updateColor,
         onStartParams: ["#9BB5CE", "Sierra Blue", "155, 181, 206"],
         onReverseComplete: updateColor,
         onReverseCompleteParams: ["#9BB5CE", "Sierra Blue", "155, 181, 206"],
       })
-      .to(elements, {
+      .to(Elem, {
         onStart: updateColor,
         onStartParams: ["#F9E5C9", "Gold", "249, 229, 201"],
         onReverseComplete: updateColor,
         onReverseCompleteParams: ["#F9E5C9", "Gold", "249, 229, 201"],
       })
-      .to(elements, {
+      .to(Elem, {
         onStart: updateColor,
         onStartParams: ["#505F4E", "Alpine Green", "80, 95, 78"],
         onReverseComplete: updateColor,
         onReverseCompleteParams: ["#505F4E", "Alpine Green", "80, 95, 78"],
       })
+      .to(Elem, {
+        onStart: updateColor,
+        onStartParams: ["#215E7C", "Blue", "33, 94, 124"],
+        onReverseComplete: updateColor,
+        onReverseCompleteParams: ["#215E7C", "Blue", "33, 94, 124"],
+      });
+
     return () => {
-      t2.kill();
+      if (t2) t2.kill();
     };
   }, []);
 
@@ -109,15 +129,15 @@ const ColorSection = () => {
     <Section ref={sectionRef}>
       <Left ref={leftRef} />
       <Center ref={textRef} />
-      <Right ref={rightRef} >
-      <Canvas camera={{ fov: 6.5 }}>
-        <ambientLight intensity={3} />
-        <directionalLight intensity={1} />
-        <Suspense fallback={null}>
-          <Model />
-        </Suspense>
-        <Environment preset="sunset" />
-      </Canvas>
+      <Right ref={rightRef}>
+        <Canvas camera={{ fov: 6.5 }}>
+          <ambientLight intensity={1.25} />
+          <directionalLight intensity={0.4} />
+          <Suspense fallback={null}>
+            <Model2 />
+          </Suspense>
+          {/* <OrbitControls /> */}
+        </Canvas>
       </Right>
     </Section>
   );

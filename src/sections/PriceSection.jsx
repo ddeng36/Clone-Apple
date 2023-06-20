@@ -1,10 +1,11 @@
-import React, { useEffect,useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
-import { AdaptiveDpr, AdaptiveEvents,} from "@react-three/drei";
+import { AdaptiveDpr, AdaptiveEvents } from "@react-three/drei";
 import { Suspense } from "react";
 import Model3 from "../components/Scene3";
+import { ColorContext } from "../context/ColorContext";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -117,79 +118,75 @@ const IndicatorText = styled.div`
 `;
 
 const PriceSection = () => {
-    const sectionRef = useRef(null);
-    const materials = useGLTF("/scene.gltf")
-    console.log()
+  const sectionRef = useRef(null);
 
-    
-    const updateColor = (color, name, rgba) => {
-    materials.materials.Body.color.set(color)
-    sectionRef.current.style.backgroundColor = `rgba(${rgba}, 0.2)`;
-    
-    }
+  const { currentColor, changeColorContext } = useContext(ColorContext);
+  useEffect(() => {
+    sectionRef.current.style.backgroundColor = `rgba(${currentColor.rgbColor},0.4)`;
+  }, [currentColor]);
+
+  const updateColor = (color, text, rgbColor) => {
+    const colorObj = {
+      color,
+      text,
+      rgbColor,
+    };
+    changeColorContext(colorObj);
+  };
+
   return (
     <Container>
-    <Section ref={sectionRef}>
-      <Phone>
-        <IndicatorText>360&deg; &#x27F2; </IndicatorText>
-        <Canvas camera={{ fov: 14 }}>
-          <ambientLight intensity={1} />
-          <directionalLight intensity={0.4} />
-          <Suspense fallback={null}>
-            <Model3 />
-          </Suspense>
+      <Section ref={sectionRef}>
+        <Phone>
+          <IndicatorText>360&deg; &#x27F2; </IndicatorText>
+          <Canvas camera={{ fov: 14 }}>
+            <ambientLight intensity={1} />
+            <directionalLight intensity={0.4} />
+            <Suspense fallback={null}>
+              <Model3 />
+            </Suspense>
 
-          <Environment preset="night" />
-          <AdaptiveDpr pixelated />
-          <AdaptiveEvents />
-          <OrbitControls enableZoom={false} />
-        </Canvas>
+            <Environment preset="night" />
+            <AdaptiveDpr pixelated />
+            <AdaptiveEvents />
+            <OrbitControls enableZoom={false} />
+          </Canvas>
 
-        <Colors>
-          <Color
-            color="#9BB5CE"
-            onClick={() =>
-              updateColor("#9BB5CE", "Sierra Blue", "155, 181, 206")
-            }
-          />
-          <Color
-            color="#F9E5C9"
-            onClick={() => updateColor("#F9E5C9", "Gold", "249, 229, 201")}
-          />
-          <Color
-            color="#505F4E"
-            onClick={() =>
-              updateColor("#505F4E", "Alpine Green", "80, 95, 78")
-            }
-          />
-          <Color
-            color="#574f6f"
-            onClick={() =>
-              updateColor("#574f6f", "Deep Purple", "87, 79, 111")
-            }
-          />
-          <Color
-            color="#A50011"
-            onClick={() => updateColor("#A50011", "Red", "165, 0, 17")}
-          />
-          <Color
-            color="#215E7C"
-            onClick={() => updateColor("#215E7C", "Blue", "33, 94, 124")}
-          />
-        </Colors>
-      </Phone>
+          <Colors>
+            <Color
+              color="#9BB5CE"
+              onClick={() =>
+                updateColor("#9BB5CE", "Sierra Blue", "155, 181, 206")
+              }
+            />
+            <Color
+              color="#F9E5C9"
+              onClick={() => updateColor("#F9E5C9", "Gold", "249, 229, 201")}
+            />
+            <Color
+              color="#505F4E"
+              onClick={() =>
+                updateColor("#505F4E", "Alpine Green", "80, 95, 78")
+              }
+            />
+            <Color
+              color="#215E7C"
+              onClick={() => updateColor("#215E7C", "Blue", "33, 94, 124")}
+            />
+          </Colors>
+        </Phone>
 
-      <Details>
-        <SubTitle>iPhone</SubTitle>
-        <Title>14 Pro Max</Title>
-        <SubTitle>From $1099*</SubTitle>
-        <ButtonContainer>
-          <Btn>Buy</Btn>
-          <BtnLink href="#">Learn More &#x2192;</BtnLink>
-        </ButtonContainer>
-      </Details>
-    </Section>
-  </Container>
+        <Details>
+          <SubTitle>iPhone</SubTitle>
+          <Title>14 Pro Max</Title>
+          <SubTitle>From $1099*</SubTitle>
+          <ButtonContainer>
+            <Btn>Buy</Btn>
+            <BtnLink href="#">Learn More &#x2192;</BtnLink>
+          </ButtonContainer>
+        </Details>
+      </Section>
+    </Container>
   );
 };
 

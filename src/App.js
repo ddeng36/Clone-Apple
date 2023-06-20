@@ -9,20 +9,23 @@ import BatterySection from "./sections/BatterySection";
 import ColorSection from "./sections/ColorSection";
 import CameraSection from "./sections/CameraSection";
 import PriceSection from "./sections/PriceSection";
+import { ColorProvider } from "./context/ColorContext";
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Quote/>
+      <Quote />
       <HeroSection />
-      <PhoneModel/>
-      <DesignSection/>
-      <DisplaySection/>
-      <Processor/>
+      <PhoneModel />
+      <DesignSection />
+      <DisplaySection />
+      <Processor />
       <BatterySection />
-      <ColorSection/>
-      <CameraSection />
-      <PriceSection/>
+      <ColorProvider>
+        <ColorSection />
+        <CameraSection />
+        <PriceSection />
+      </ColorProvider>
     </>
   );
 }
